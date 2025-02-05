@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load totembo_tags %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block poster %}
+{% endblock poster %}
+
+{% block products %}
+{% endblock products %}
+
+{% block main %}
+
+
+<div class="comment-container">
+    <div class="comment">
+        <h4>Аюб</h4>
+        <span class="verified-client">Verified client</span>
+        <span class="comment-date">4 ноября 2024 г. 11:58</span>
+        <p>отличный продукт</p>
+    </div>
+    <div class="nested-comments">
+        <div class="comment">
+            <h4>Иван</h4>
+            <span class="verified-client">Verified client</span>
+            <span class="comment-date">4 ноября 2024 г. 12:30</span>
+            <p>Полностью согласен!</p>
+        </div>
+        <div class="comment">
+            <h4>Мария</h4>
+            <span class="verified-client">Verified client</span>
+            <span class="comment-date">4 ноября 2024 г. 13:00</span>
+            <p>Тоже понравилось!</p>
+        </div>
+    </div>
+</div>
+
+
+{% endblock main %}

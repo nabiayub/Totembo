@@ -1,0 +1,7 @@
+<div class="product_detail-slider">
+    {% for image in product.product_images.all %}
+    <div class="product_detail-slider_block justify-content-between">
+        <img src="{{ image.photo.url }}" alt="" class="slider-image">
+    </div>
+    {% endfor %}
+</div>

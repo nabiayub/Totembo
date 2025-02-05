@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load totembo_tags %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block poster %}
+{% endblock poster %}
+
+{% block products %}
+{% endblock products %}z
+
+{% block main %}
+
+<section class="category_products">
+            <!-- PRODUCTS FILTER START -->
+            <!-- PRODUCTS FILTER END -->
+
+            <!-- PRODUCTS BLOCK START -->
+            <div class="container">
+                <div class="row">
+                    {% if products %}
+                    {% for product in products %}
+                    {% include 'totembo/components/_card.html' %}
+                    {% endfor %}
+                    {% else %}
+                    <h2 class="justify-content-center ">В данной категории нет товаров</h2>
+                    {% endif %}
+
+                </div>
+            </div>
+            <!-- PRODUCTS BLOCK END -->
+
+            <!-- PAGINATION START -->
+
+            <!-- PAGINATION END -->
+        </section>
+
+{% endblock main %}

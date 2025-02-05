@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block poster %}
+{% endblock poster %}
+
+{% block products %}
+{% endblock products %}
+
+{% block main %}
+{% if request.user.is_authenticated %}
+{% load totembo_tags %}
+{% check_cart request as products_in_cart %}
+{% endif %}
+
+<section class="product_detail">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                {% include 'totembo/components/_product_slider.html' %}
+            </div>
+            <div class="col-md-6">
+                {% include 'totembo/components/_product_info.html' %}
+
+                <div class="product-detail-info mb-4">
+                    <div class="product-detail-item">
+                        <i class="fas fa-undo-alt icon"></i>
+                        <span>Возврат в течение 30 дней</span>
+                    </div>
+                    <div class="product-detail-item">
+                        <i class="fas fa-truck icon"></i>
+                        <span>Бесплатная и быстрая доставка</span>
+                    </div>
+                </div>
+
+
+                {% if product in products_in_cart %}
+                <a href="{% url 'add_to_cart' product.slug 'delete_product' %}" class="product_detail-buy_btn btn"
+                style="background-color: rgba(48, 48, 48, 0.7);">
+                    Удалить из корзины
+                </a>
+                {% else %}
+
+                <a href="{% url 'add_to_cart' product.slug 'add' %}" class="product_detail-buy_btn btn">В корзину</a>
+
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="brand_info justify-content-center">
+    <div class="brand_info-block d-flex flex-column justify-content-center">
+        <h3 class="brand_info-title">Описание</h3>
+        <p class="brand_info-desc">{{ product.description }}</p>
+    </div>
+</section>
+
+
+<div class="review-form mt-5 mb-5">
+    <form action="#" method="post">
+        {% csrf_token %}
+        {{ form.text }}
+        <button type="submit">Отправить</button>
+    </form>
+</div>
+
+
+<div class="customer_reviews">
+    {% if reviews %}
+    <h2 class="product_detail-main-title text-center fw-bold ">Отзывы</h2>
+    <div class="customer_reviews-slider">
+        {% for review in reviews %}
+        <div class="customer_reviews-slider_block">
+            <h5 class="customer_reviews-title">{{ review.user.first_name }}</h5>
+            <div class="d-flex justify-content-between">
+                <small class="customer_reviews-status">Verified client</small>
+                <span class="customer_reviews-date">{{ review.created_at }}</span>
+            </div>
+            <p class="customer_reviews-desc">{{ review.text }}</p>
+
+            {% if request.user == review.user %}
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'delete_review' review.pk %}">
+                    <button class="customer_reviews-delete ">Удалить</button>
+                </a>
+                <a href="{% url 'change_review' review.pk %}">
+                    <button class="customer_reviews-change ">Изменить</button>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    {% endif %}
+</div>
+
+
+<div class="recommended_goods">
+    <h2 class="product_detail-main-title text-center">You may also like</h2>
+
+    <!-- PRODUCTS BLOCK START -->
+    <div class="container">
+        <div class="row">
+            {% for product in products %}
+            {% include 'totembo/components/_card.html' %}
+            {% endfor %}
+        </div>
+    </div>
+    <!-- PRODUCTS BLOCK END -->
+
+</div>
+
+{% endblock main %}
+
+{% block slider %}
+{% endblock slider %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load totembo_tags %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+
+{% block main %}
+<main>
+    <!-- BLOCKS PRODUCTS START -->
+
+    <section class="products-section products_section-watches">
+        <!-- SECTION QUARTZ EDITION START -->
+
+
+        <!-- SECTION AUTOMATIC EDITION START -->
+        <div class="container mt-4">
+            <div class="row">
+                {% for product in products %}
+                {% include 'totembo/components/_card.html' %}
+                {% endfor %}
+            </div>
+        </div>
+        <!-- SECTION AUTOMATIC EDITION END -->
+    </section>
+
+
+</main>
+{% endblock main %}

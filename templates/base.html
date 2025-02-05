@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--    название -->
+    <title>
+        {% block title %}
+        {% endblock title %}
+    </title>
+
+    {% include 'components_base/_style.html' %}
+
+</head>
+
+<body>
+<header>
+    <!-- HEADER NAV START -->
+    {% include 'layout/_header.html' %}
+    <!-- HEADER NAV END -->
+
+    <!-- HEADER TEXT BLOCK START -->
+    {% block poster %}
+    {% include 'components_base/_poster.html' %}
+    {% endblock poster %}
+    <!-- HEADER TEXT BLOCK END -->
+
+    <!-- HEADER POSTER START -->
+</header>
+
+{% block products %}
+{% include 'components_base/_products.html' %}
+{% endblock products %}
+
+
+{% block main %}
+{% endblock main %}
+
+
+ <!-- SLIDER BLOCK START -->
+{% block slider %}
+{% include 'components_base/_slider.html' %}
+{% endblock slider %}
+    <!-- SLIDER BLOCK END -->
+
+
+
+    <!-- BLOCK EMAIL FORM START -->
+{% block email %}
+
+{% endblock email %}
+    <!-- BLOCK EMAIL FORM END -->
+
+
+{% include 'layout/_footer.html' %}
+
+
+{% include 'components_base/_scripts.html' %}
+
+</body>
+
+</html>

@@ -1,0 +1,149 @@
+{% load static %}
+{% load totembo_tags %}
+{% get_categories as categories %}
+
+<nav class="header_nav">
+    <div class="container">
+        <div class="naw_menu">
+            <a href="{% url 'main' %}" class="logo_text">TOTEMBO</a>
+
+
+            <ul class="header_nav-menu align-items-center">
+                {% if not 'login' in request.path and 'registration' not in request.path %}
+                {% for category in categories %}
+                <li class="header_nav-item animated-heart ">
+                    <a class="header_nav-link " href="{{ category.get_absolute_url }}">
+                        {{ category.title }}
+                    </a>
+                </li>
+                {% endfor %}
+                {% endif %}
+
+
+            </ul>
+
+            {% if not 'login' in request.path and 'registration' not in request.path %}
+            <div class="header_panel">
+
+                {% if not request.user.is_authenticated %}
+                <a href="{% url 'login' %}">
+                    <div class="header_panel-item">
+                        <img class="circum" src="{% static 'totembo/images/icons/circum_login.svg' %}" alt="">
+                    </div>
+                </a>
+                {% else %}
+                <a href="{% url 'logout' %}">
+                    <div class="header_panel-item">
+                        <img class="circum" src="{% static 'totembo/images/icons/logout.svg' %}" alt="">
+                    </div>
+                </a>
+                {% endif %}
+
+
+                <a href="{% url 'favourites' %}">
+                    <div class="header_panel-item">
+                        <img class="header_icon" src="{% static 'totembo/images/icons/basket_icon.svg' %}" alt="">
+                    </div>
+                </a>
+
+                <a href="{% url 'cart' %}">
+                    <div class="header_panel-item">
+                        <img class="header_icon" src="{% static 'totembo/images/icons/cart.svg' %}" alt="">
+                    </div>
+                </a>
+
+                <a href="{% url 'profile' %}">
+                    <div class="header_panel-item">
+                        <img class="header_icon" src="{% static 'totembo/images/icons/user_icon.svg' %}" alt="">
+                    </div>
+                </a>
+            </div>
+            {% endif %}
+
+
+            <!-- BURGER MENU START -->
+            {% if not 'login' in request.path and 'registration' not in request.path %}
+            <div class="header_lx-panel">
+                <input type="checkbox" class="toggler">
+                <div class="hamburger">
+                    <div></div>
+                </div>
+                <div class="menu">
+                    <div>
+                        <div>
+                            <ul>
+                                <li>
+                                    <a class="header_nav-link" href=""><img src="images/icons/basket_icon.svg"
+                                                                            alt=""></a>
+                                    <a class="header_nav-link" href=""><img src="images/icons/ru_lang_icon.svg"
+                                                                            alt=""></a>
+                                </li>
+                                {% for category in categories %}
+                                <li class="header_nav-item"><a class="header_nav-link"
+                                                               href="{{ category.get_absolute_url }}">
+                                    {{ category.title }}</a>
+                                </li>
+
+                                {% endfor %}
+                                <li class="header_nav-item">
+                                    <a href="{% url 'favourites' %}">
+                                        <div class="header_panel-item">
+                                            <img class="header_icon"
+                                                 src="{% static 'totembo/images/icons/basket_icon.svg' %}" alt="">
+                                        </div>
+                                    </a>
+                                </li>
+                                {% if not request.user.is_authenticated %}
+                                <li class="header_nav-item">
+                                    <a href="{% url 'login' %}">
+                                        <div class="header_panel-item">
+                                            <img class="circum"
+                                                 src="{% static 'totembo/images/icons/circum_login.svg' %}" alt="">
+                                        </div>
+                                    </a>
+                                </li>
+                                {% else %}
+                                <li class="header_nav-item">
+                                    <a href="{% url 'logout' %}">
+                                        <div class="header_panel-item">
+                                            <img class="circum" src="{% static 'totembo/images/icons/logout.svg' %}"
+                                                 alt="">
+                                        </div>
+                                    </a>
+                                </li>
+                                {% endif %}
+
+                                <li class="header_nav-item">
+                                    <a href="{% url 'cart' %}">
+                                        <div class="header_panel-item">
+                                            <img class="header_icon" src="{% static 'totembo/images/icons/cart.svg' %}"
+                                                 alt="">
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li class="header_nav-item">
+                                    <a href="{% url 'profile' %}">
+                                        <div class="header_panel-item">
+                                            <img class="header_icon"
+                                                 src="{% static 'totembo/images/icons/user_icon.svg' %}" alt="">
+                                        </div>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <!-- BURGER MENU END -->
+        </div>
+    </div>
+
+
+</nav>
+
+
+
+<!-- CSS для выравнивания и стилизации -->

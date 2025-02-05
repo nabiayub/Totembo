@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% load totembo_tags %}
+{% load static %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block poster %}
+{% endblock poster %}
+
+{% block products %}
+{% endblock products %}
+
+{% block main %}
+
+<main>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="box-element">
+                    <div class="d-flex justify-content-around align-items-center">
+                        <h5>Товары: <strong>{{ order.get_total_quantity_of_products }}</strong></h5>
+                        <h5>Сумма заказа: <strong>{% get_normal_price order.get_cart_total_price %} сум</strong></h5>
+                    </div>
+                    <table class="table">
+
+                    </table>
+                </div>
+
+                {% for item in order_products %}
+                <div class="box-element">
+
+
+                    <div class="cart-row">
+                        <div style="flex:2"></div>
+                        <div style="flex:2"><strong>Товар</strong></div>
+                        <div style="flex:1"><strong>Цена</strong></div>
+                        <div style="flex:1"><strong>Количество</strong></div>
+                        <div style="flex:1"><strong>Сумма</strong></div>
+                    </div>
+
+
+                    <div class="cart-row align-items-center">
+                        <div style="flex:2"><img src="{{ item.product.get_product_first_photo }}" alt=""
+                                                 class="row-image"></div>
+                        <div style="flex:2"><p>{{ item.product.title }}</p></div>
+                        <div style="flex:1"><p>{% get_normal_price item.product.price %} сум</p></div>
+
+                        <div style="flex:1" class="d-flex"><p class="mt-1">{{ item.quantity }}</p>
+
+                            <div class="quantity mx-4">
+
+                                <a href="{% url 'add_to_cart' item.product.slug 'add' %}">
+                                    <img src="{% static 'totembo/images/arrow-up.png' %}" alt=""
+                                         data-product="id"
+                                         data-action="add" class="chg-quantity update-cart">
+                                </a>
+
+                                <a href="{% url 'add_to_cart' item.product.slug 'delete' %}">
+                                    <img src="{% static 'totembo/images/arrow-down.png' %}" alt=""
+                                         data-product="id"
+                                         data-action="remove" class="chg-quantity update-cart">
+                                </a>
+
+                            </div>
+
+                        </div>
+
+
+                        <div style="flex:1"><p>{% get_normal_price item.get_product_price_with_discount %} сум</p></div>
+
+                    </div>
+
+
+                </div>
+                {% endfor %}
+
+                <div class="d-flex justify-content-between">
+
+                    {% if order_products %}
+                    <a href="{% url 'clear_cart' %}" class="btn btn-danger rounded">Очитить корзину</a>
+                    <a href="{% url 'checkout' %}" class="btn btn-success rounded">Сделать заказ</a>
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</main>
+
+{% endblock main %}
+
+
+{% block slider %}
+{% endblock slider %}
+
+{% block email %}
+{% endblock email %}

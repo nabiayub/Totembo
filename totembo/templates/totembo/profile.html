@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load totembo_tags %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block poster %}
+{% endblock poster %}
+
+{% block products %}
+{% endblock products %}
+
+{% block main %}
+
+<main class="main">
+    <div class="profile">
+        <div class="container">
+            <div class="profile__content">
+                <form class="profile__form" method="post" action="">
+                    {% csrf_token %}
+                    <h2 class="profile__title">Личные данные</h2>
+                    <div class="profile__form-grid">
+
+                        <div class="input__title">
+                            <h2>Имя</h2>
+                            {{ form1.first_name }}
+                        </div>
+                        <div class="input__title">
+                            <h2>E-mail</h2>
+                            {{ form1.email }}
+                        </div>
+                        <div class="input__title">
+                            <h2>Фамилия</h2>
+                            {{ form1.last_name }}
+                        </div>
+                        <div class="input__title">
+                            <h2>Номер телефона</h2>
+                            {{ form2.phone }}
+                        </div>
+                        <div class="input__title">
+                            <h2>Город</h2>
+                            {{ form2.city }}
+                        </div>
+                        <div></div>
+                        <div class="input__title _span-two">
+                            <h2>Улица</h2>
+                            {{ form2.street }}
+                        </div>
+                        <div class="input__title">
+                            <h2>Дом/Корпус</h2>
+                            {{ form2.home }}
+                        </div>
+                        <div class="input__title">
+                            <h2>Квартира</h2>
+                            {{ form2.flat }}
+                        </div>
+                    </div>
+                    <button class="btn profile__btn" type="submit">Изменить</button>
+
+                </form>
+
+
+                {% if orders %}
+                <div class="profile__orders">
+                    <h2 class="profile__title">Последний заказ</h2>
+
+                    {% for order in orders %}
+                    <table class="profile__table">
+                        <tr>
+                            <td colspan="4">Товар</td>
+                            <td>Цена товара</td>
+                            <td>Количество</td>
+                            <td>На сумму</td>
+
+
+                        </tr>
+
+                        {% for item in order.products.all %}
+                        <tr>
+                            <td colspan="4" class="profile__title-adaptive">
+                                <div class="tabel__item">
+                                    <img src="{{ item.get_photo }}" alt="img">
+                                    <span>{{ item.product }}</span>
+                                </div>
+                            </td>
+                            <td class="profile__tabel-data">{% get_normal_price item.product_price %} сум</td>
+                            <td class="profile__tabel-data">{{ item.quantity }}</td>
+                            <td class="profile__tabel-data">{% get_normal_price item.final_price %} сум</td>
+
+
+                        </tr>
+                        {% endfor %}
+
+                        <!-- Не трогать - это заглушка для корректного отображения таблицы -->
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <!-- Не трогать - это заглушка для корректного отображения таблицы -->
+
+
+                    </table>
+                    <p class="mx-3 mt-2 text-dark">Сумма чека: {% get_normal_price order.total_price %} сум</p>
+                    {% endfor %}
+                    <hr>
+
+
+                    <a href="{% url 'history' %}" class="profile__orders-link">Смотреть всё</a>
+                </div>
+                {% else %}
+                    <h2 class="profile__title" style="margin-left: 20%; margin-top: 25%">У вас нет заказов</h2>
+                {% endif %}
+
+
+
+
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock main %}
+
+
+{% block slider %}
+{% endblock slider %}
+
+{% block email %}
+{% endblock email %}

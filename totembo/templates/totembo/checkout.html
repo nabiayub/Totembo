@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% load totembo_tags %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block poster %}
+{% endblock poster %}
+
+{% block products %}
+{% endblock products %}
+
+{% block main %}
+
+<style>
+
+    * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f2f2f5;
+}
+
+.checkout-wrapper {
+    margin-left: 18%;
+    margin-bottom: 7%;
+
+    display: flex;
+    max-width: 1000px;
+    width: 100%;
+    /* Убираем фон и тень */
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.form-section, .cart-section {
+    padding: 30px;
+    flex: 1;
+    border-radius: 11px;
+}
+
+.form-section {
+    background-color: #f8f9fb; /* Легкий фон для формы */
+    margin-right: 15px; /* Разделение между секциями */
+}
+
+.cart-section {
+    background-color: #ffffff; /* Легкий фон для корзины */
+    border: 1px solid #ececec; /* Легкая рамка, чтобы выделить секцию */
+    margin-left: 100px
+}
+
+h2 {
+    font-size: 1.8em;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: #666666;
+    margin-bottom: 8px;
+}
+
+.form-input, .form-textarea {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1em;
+    color: #333;
+    background-color: #ffffff;
+    border: 1px solid #d1d9e0;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+.form-input:focus, .form-textarea:focus {
+    border-color: #6a82e7;
+    outline: none;
+}
+
+.form-textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #6a82e7;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #556cd6;
+}
+
+.cart-section h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: #333333;
+}
+
+.cart-item {
+    padding: 5px 10px;
+    border-bottom: 1px solid #e2e6ea;
+}
+
+.item-name {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.item-quantity, .item-price {
+    color: #777777;
+    font-size: 0.9em;
+}
+
+
+
+.cart-total {
+    margin-top: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+
+label {
+    display: none;
+}
+
+
+</style>
+
+
+<div class="checkout-wrapper">
+    <!-- Left Section: Order Form -->
+    <div class="form-section">
+        <h2>Информация о заказе</h2>
+        <form method="post" action="{% url 'payment' %}">
+            {% csrf_token %}
+            {{ customer_form.as_p }}
+            <hr>
+            {{ shipping_form.as_p }}
+
+            <button type="submit" class="submit-button">Оплатить</button>
+        </form>
+    </div>
+
+    <!-- Right Section: Product List -->
+    <div class="cart-section">
+        <h2>Корзина</h2>
+        {% for item in order_products %}
+        <div class="cart-item">
+            <p class="item-name">{{ item.product.title }}</p>
+            <p class="item-quantity">Цена: {% get_normal_price item.get_product_price_with_discount %} сум </p>
+            <p class="item-price">Количество: {{ item.quantity }} </p>
+        </div>
+        {% endfor %}
+        <!-- Add more products as needed -->
+        <p class="cart-total">Итого: {% get_normal_price order.get_cart_total_price %} сум</p>
+
+    </div>
+</div>
+
+
+{% endblock main %}
+
+{% block slider %}
+{% endblock slider %}
+
+
+{% block email %}
+{% endblock email %}

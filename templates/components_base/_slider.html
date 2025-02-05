@@ -1,0 +1,19 @@
+{% load totembo_tags %}
+{% get_categories as categories %}
+
+<div class="owl-carousel">
+    <div class="owl-carousel_block">
+        <h3 class="owl-carousel_block-title">Наш ассортимент</h3>
+    </div>
+    {% for category in categories %}
+    <div class="owl-carousel_block owl-carousel_block-bg">
+        <div class="owl-carousel_block-content">
+            <img src="{{ category.image.url }}" alt="">
+        </div>
+        <a href="{{ category.get_absolute_url }}" class="owl-carousel_block-hover">
+            <p class="owl-carousel_block-desc">{{ category.title }}</p>
+        </a>
+    </div>
+    {% endfor %}
+
+</div>
